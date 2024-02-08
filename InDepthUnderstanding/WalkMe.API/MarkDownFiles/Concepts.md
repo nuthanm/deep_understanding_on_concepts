@@ -24,3 +24,47 @@ We pass this object to :base(dbContextOptions) like below
  - For any Database object Class == Domain/Entities
  - 
 
+
+### DI - Dependency Injection
+
+**Without DI**
+
+```
+public class EmployeeController: ControllerBase
+{
+    private readonly EmployeeService _empService;
+
+    public EmployeeController()
+    {
+       _empService = new();
+    }
+}
+```
+**Disadvantage of without DI:**
+1. Initially i used EmployeeService and lateron if any new version i want to create and inject in all the controllers
+   then it's a difficult task.
+   Ex: If i injected already in 10 controllers then i should go and change to EmpNewService in all controllers.
+
+**With DI**
+
+```
+In Program.cs or Starup.cs
+
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+
+In Controllers/,
+public class EmployeeController: ControllerBase
+{
+    private readonly IEmployeeService _empService;
+
+    public EmployeeController(IEmployeeService empService)
+    {
+       _empService = empService;
+    }
+}
+```
+The above issue is easily solved. This means implementation of service is easily added and not effected in any where.
+```
+    builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+    builder.Services.AddScoped<IEmployeeService, EmpNewService>();
+```
