@@ -1,4 +1,4 @@
-﻿namespace ProgramEntryPoint.API.Models.Domain_Models
+﻿namespace WalkMe.API.Models.Domain_Models
 {
     public class Difficulty
     {

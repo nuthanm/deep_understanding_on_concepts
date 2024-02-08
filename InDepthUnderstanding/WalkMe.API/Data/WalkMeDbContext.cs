@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ProgramEntryPoint.API.Models.Domain_Models;
+using WalkMe.API.Models.Domain_Models;
 
-namespace ProgramEntryPoint.API.Data
+namespace WalkMe.API.Data
 {
     public class WalkMeDbContext : DbContext
     {
