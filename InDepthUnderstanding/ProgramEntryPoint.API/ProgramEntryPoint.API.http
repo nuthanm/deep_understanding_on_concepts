@@ -1,0 +1,6 @@
+@ProgramEntryPoint.API_HostAddress = http://localhost:5031
+
+GET {{ProgramEntryPoint.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
