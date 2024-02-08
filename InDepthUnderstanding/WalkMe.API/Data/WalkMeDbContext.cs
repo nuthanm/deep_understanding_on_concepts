@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 namespace WalkMe.API.Data;
-public class WalkMeDbContext(DbContextOptions dbContextOptions)
+public class WalkMeDbContext(DbContextOptions<WalkMeDbContext> dbContextOptions)
     : DbContext(dbContextOptions)
 {
     public DbSet<Difficulty> Difficulties { get; set; }

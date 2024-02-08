@@ -12,8 +12,9 @@ builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddDbContext<WalkMeDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("WalkMeDatabaseConnection")
-    ));
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("WalkMeDatabaseConnection")
+        ));
 
 var app = builder.Build();
 
