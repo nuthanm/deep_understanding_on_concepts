@@ -21,7 +21,7 @@ We pass this object to :base(dbContextOptions) like below
 ```
 
 ### Terminologies
- - For any Database object Class == Domain/Entities
+ - For any Database object in Csharp : Class == Domain/Entities
  - 
 
 
@@ -68,3 +68,11 @@ The above issue is easily solved. This means implementation of service is easily
     builder.Services.AddScoped<IEmployeeService, EmployeeService>();
     builder.Services.AddScoped<IEmployeeService, EmpNewService>();
 ```
+
+## Clear on the following concepts
+- Http Request Pipeline
+- Importance of Middlewares and it's usage in terms of override the existing implementation
+- DTO's ( Data Transfer Objects) vs Domain Models
+- Difference between AddSingleTon, AddScoped, AddTransient, AddTryScoped, AddTryTransient
+- Differnece between IActionResult vs ActionResult
+- How to handle exceptions - At controllers/Services/Repository
