@@ -46,5 +46,33 @@ namespace WalkMe.API.Controllers
 
             return Ok(regions);
         }
+
+        // GET Region details for a specific id
+        // GET: https:localhost:<portnumber>/api/regions/{id}
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public IActionResult GetById([FromRoute] Guid id)
+        {
+            // Option 1: 
+            var regionWithFind = dbContext.Regions.Find(id);
+
+
+            // Option 2: Combined using Where and FirstOrDefault
+            var regionWithWhere = dbContext.Regions.Where(x => x.Id == id).FirstOrDefault();
+
+            // Option 3: 
+            var regionWithFirstOrDefault = dbContext.Regions.FirstOrDefault(x => x.Id == id);
+
+            // Option 4: 
+            var regionWithSingleOrDefault = dbContext.Regions.SingleOrDefault(x => x.Id == id);
+
+
+            if (regionWithSingleOrDefault is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(regionWithSingleOrDefault);
+        }
     }
 }
