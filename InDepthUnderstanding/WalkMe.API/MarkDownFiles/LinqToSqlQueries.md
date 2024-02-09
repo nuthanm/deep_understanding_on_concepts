@@ -1,30 +1,35 @@
-## This place is for you to have all the LINQ queries and its SQL queries
+# Explore LINQ to SQL: View Generated Queries and Solutions
 
 ### Query 1: To get entire data from a table
-#### Pattern 1: Without List() or ListAsync()
+
+#### **Pattern 1:** Without List() or ListAsync()
+
+**LinqQuery:** 
+
 ```
 var regions = dbContext.Regions;
 ```
-
+**SQL Query:**
 ```
-SQL Query: 
 SELECT [r].[Id], [r].[Code], [r].[Name], [r].[RegionImageUrl] FROM[Regions] AS[r]
 ```
 Return type for Pattern 1: ```DbSet<Region>```
 
-#### Pattern 1: With out List() or ListAsync()
+#### Pattern 2: With out List() or ListAsync()
+
+**Linq Query:**
 ```
 var regions = dbContext.Regions.ToList();
 ```
-
+**SQL Query:**
 ```
-SQL Query: 
 SQL Query: SELECT [r].[Id], [r].[Code], [r].[Name], [r].[RegionImageUrl] FROM[Regions] AS[r]
 ```
 Return type for Pattern 2: ```List<Region>```
 
 **Note:** No change in the query either way you can use it.
-           
+
+----------------------------------
 ### Query 2: To get single data we have multiple options
 #### Option 1: If you have a primary key column then use ```Find or FindAsync``` methods
 
@@ -104,6 +109,7 @@ SELECT TOP(2) [r].[Id], [r].[Code], [r].[Name], [r].[RegionImageUrl]
       FROM [Regions] AS [r]
       WHERE [r].[Id] = @__id_0
 ```
+
 **Points:**
 - Query returns Nullable class ```Ex: Region?```
 - Instead of Top(1) in this query Top(2) - only this change in SQL query
@@ -111,4 +117,6 @@ SELECT TOP(2) [r].[Id], [r].[Code], [r].[Name], [r].[RegionImageUrl]
 - if you expect only one record to match the criteria, 
 - and you want an ``` exception to be thrown if more than one record is found```
 
-**Note:** No change in SQL Queries when you use any one of these options: Option 1, Option 2 and Option 3 
+**Note:** No change in SQL Queries when you use any one of these options: Option 1, Option 2, and Option 3 
+
+----------------------------------
