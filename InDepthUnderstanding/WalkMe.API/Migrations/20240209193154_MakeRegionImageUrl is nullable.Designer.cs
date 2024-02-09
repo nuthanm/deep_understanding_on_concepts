@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WalkMe.API.Data;
 
@@ -11,9 +12,11 @@ using WalkMe.API.Data;
 namespace WalkMe.API.Migrations
 {
     [DbContext(typeof(WalkMeDbContext))]
-    partial class WalkMeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240209193154_MakeRegionImageUrl is nullable")]
+    partial class MakeRegionImageUrlisnullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

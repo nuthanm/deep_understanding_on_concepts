@@ -69,6 +69,22 @@ The above issue is easily solved. This means implementation of service is easily
     builder.Services.AddScoped<IEmployeeService, EmpNewService>();
 ```
 
+### DTO's ( Data Transfer Objects) vs Domain Models
+- ```DTO``` stands "Data Transfer Objects"
+- In the name itself these objects are used for transfer between layers or over networks.
+- Network(s) means client-server communication
+- These are subset of domain models/Entity models
+- ```Reason``` behind introduced these DTO's are 
+  - No direct exposure of Domain models to client
+  - With DTO's we can manipulate and send it back to client.
+  - 
+**Pros**
+- Separation of Concerns: Domain models are tightly coupled with Database schema objects where as DTO's are not like that we use it for business purpose.
+                           Advantage here is we can customize and manipulate on DTO's and no need of expoing all the columns to the client.
+- Performance: No need of send all the columns from Domain model so there should be performance difference between DTO vs Domain model
+- Security: Avoiding exposing all the data over the network to the client.
+- Versioning
+
 ## Clear on the following concepts
 - Http Request Pipeline
 - Importance of Middlewares and it's usage in terms of override the existing implementation
