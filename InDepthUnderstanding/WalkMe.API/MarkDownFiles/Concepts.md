@@ -76,3 +76,4 @@ The above issue is easily solved. This means implementation of service is easily
 - Difference between AddSingleTon, AddScoped, AddTransient, AddTryScoped, AddTryTransient
 - Differnece between IActionResult vs ActionResult
 - How to handle exceptions - At controllers/Services/Repository
+- Order of Attributes: [Http] and then [Route("")] is default one 

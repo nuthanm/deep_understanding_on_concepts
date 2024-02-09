@@ -62,3 +62,29 @@ Other frameworks: Consult documentation for your specific framework to see if th
 
 **Solution**:
 ```<InvariantGlobalization>false</InvariantGlobalization>```
+
+
+## Issue 4:
+ System.InvalidOperationException: Multiple constructors accepting all given argument types have been found in type 'WalkMe.API.Controllers.RegionsController'. There should only be one applicable constructor.
+
+ **Reason**:
+ ```
+ public class RegionsController : ControllerBase
+ {
+        private readonly WalkMeDbContext dbContext;
+
+        public RegionsController(WalkMeDbContext dbContext)
+        {
+            this.dbContext = dbContext;
+        }
+ }
+ ```
+ **Solution**:
+ ```
+ public class RegionsController(WalkMeDbContext dbContext) : ControllerBase
+ {
+        private readonly WalkMeDbContext dbContext = dbContext;
+ }
+ ```
+**Note:** Here, the observation is in DBContext we changed construtor declaration as part of newer framework but in controller we did traditional approach.
+Either you follow every where with same pattern or else you get this error.
