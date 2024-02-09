@@ -1,4 +1,4 @@
-## This place is for you to have all the LINQ queries and its SQL query
+## This place is for you to have all the LINQ queries and its SQL queries
 
 ### Query 1: To get entire data from a table
 #### Pattern 1: Without List() or ListAsync()
