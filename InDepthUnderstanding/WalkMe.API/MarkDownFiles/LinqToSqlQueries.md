@@ -1,7 +1,7 @@
-## This place for you to have all the linq queries and its sql query
+## This place is for you to have all the LINQ queries and its SQL query
 
 ### Query 1: To get entire data from a table
-#### Pattern 1: With out List() or ListAsync()
+#### Pattern 1: Without List() or ListAsync()
 var regions = dbContext.Regions;
 ```
 SQL Query: 
