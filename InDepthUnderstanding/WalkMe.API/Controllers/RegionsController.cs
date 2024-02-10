@@ -5,9 +5,8 @@
  * 3. Code should be simple in Controller.
  */
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using WalkMe.API.Data;
 using WalkMe.API.Models.DTO;
+using WalkMe.API.Repositories;
 
 namespace WalkMe.API.Controllers
 {
@@ -16,11 +15,11 @@ namespace WalkMe.API.Controllers
     [ApiController]
     public class RegionsController : ControllerBase
     {
-        private readonly WalkMeDbContext dbContext;
+        private readonly IRegionRepository regionRepository;
 
-        public RegionsController(WalkMeDbContext dbContext)
+        public RegionsController(IRegionRepository regionRepository)
         {
-            this.dbContext = dbContext;
+            this.regionRepository = regionRepository;
         }
 
         // GET all Regions
@@ -29,7 +28,7 @@ namespace WalkMe.API.Controllers
         public async Task<IActionResult> GetAllAsync()
         {
             // Get Data from database - Domain
-            var regions = await dbContext.Regions.ToListAsync();
+            var regions = await regionRepository.GetAllAsync();
 
             // Map domain data to Dto
             var regionDto = new List<RegionDto>();
@@ -50,11 +49,11 @@ namespace WalkMe.API.Controllers
         // GET Region details for a specific id
         // GET: https:localhost:<portnumber>/api/regions/{id}
         [HttpGet]
-        [Route("{id:Guid}")]
+        [Route("{id:guid}")]
         public async Task<IActionResult> GetByIdAsync([FromRoute] Guid id)
         {
             // Option 1: 
-            var regionDomain = await dbContext.Regions.FindAsync(id);
+            var regionDomain = await regionRepository.GetByIdAsync(id);
 
             if (regionDomain is null)
             {
@@ -88,8 +87,7 @@ namespace WalkMe.API.Controllers
 
 
             // Use Domain Model to create Region
-            await dbContext.Regions.AddAsync(regionDomainModel);
-            await dbContext.SaveChangesAsync();
+            regionDomainModel = await regionRepository.CreateRegionAsync(regionDomainModel);
 
             // Map Domain model to Dto
             var regionDto = new RegionDto
@@ -107,28 +105,25 @@ namespace WalkMe.API.Controllers
         // Put: https:localhost:<portnumber>/api/regions/{id}
         [HttpPut]
         [Route("{id:guid}")]
-        public async Task<IActionResult> UpdateRegionAsync([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto addRegionRequestDto)
+        public async Task<IActionResult> UpdateRegionAsync([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {
-            // Check first if Region exists
-            var isExists = await dbContext.Regions.AnyAsync(x => x.Id == id);
-            if (!isExists)
-            {
-                return NotFound();
-            }
 
             // Map or Convert Dto to Domain
             var regionDomainModel = new Region
             {
                 Id = id,
-                Code = addRegionRequestDto.Code,
-                Name = addRegionRequestDto.Name,
-                RegionImageUrl = addRegionRequestDto.RegionImageUrl
+                Code = updateRegionRequestDto.Code,
+                Name = updateRegionRequestDto.Name,
+                RegionImageUrl = updateRegionRequestDto.RegionImageUrl
             };
 
+            // Check first if Region exists
+            regionDomainModel = await regionRepository.UpdateRegionAsync(id, regionDomainModel);
 
-            // Use Domain Model to create Region
-            dbContext.Regions.Update(regionDomainModel);
-            await dbContext.SaveChangesAsync();
+            if (regionDomainModel is null)
+            {
+                return NotFound();
+            }
 
             // Map Domain model to Dto
             var regionDto = new RegionDto
@@ -149,17 +144,22 @@ namespace WalkMe.API.Controllers
         public async Task<IActionResult> DeleteRegionAsync([FromRoute] Guid id)
         {
             // Check first if Region exists
-            var region = await dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
-            if (region is null)
+            var regionDomainModel = await regionRepository.DeleteRegionAsync(id);
+            if (regionDomainModel is null)
             {
                 return NotFound();
             }
 
-            // Delete the region
-            dbContext.Regions.Remove(region);
-            await dbContext.SaveChangesAsync();
+            // Map Domain model to Dto
+            var regionDto = new RegionDto
+            {
+                Id = regionDomainModel.Id,
+                Name = regionDomainModel.Name,
+                Code = regionDomainModel.Code,
+                RegionImageUrl = regionDomainModel.RegionImageUrl
+            };
 
-            return NoContent();
+            return Ok(regionDto);
         }
     }
 }

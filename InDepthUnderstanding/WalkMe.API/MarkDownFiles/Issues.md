@@ -115,3 +115,14 @@ We added this line after update the records
 ```
 
 ---
+## Issue 6
+>  System.InvalidOperationException: Unable to resolve service for type 'WalkMe.API.Repositories.RegionRepository' while attempting to activate 'WalkMe.API.Controllers.RegionsController'.
+         at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.ThrowHelperUnableToResolveService(Type type, Type requiredBy)
+
+**Reason:**
+Created a interface and used it in Concret class but not register in startup.cs or program.cs
+
+**Solution:**
+```
+builder.Services.AddScoped<IRegionRepository, RegionRepository>();
+```

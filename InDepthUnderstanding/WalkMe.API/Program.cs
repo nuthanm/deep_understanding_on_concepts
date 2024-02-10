@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using WalkMe.API.Data;
+using WalkMe.API.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,8 @@ builder.Services.AddDbContext<WalkMeDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("WalkMeDatabaseConnection")
         ));
+
+builder.Services.AddScoped<IRegionRepository, RegionRepository>();
 
 var app = builder.Build();
 
