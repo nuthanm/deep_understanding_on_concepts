@@ -1,4 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿/*
+ * Now this class,
+ * 1. Changed from sync to async
+ * 2. Now we move this DBContext from controller to Repository
+ * 3. Code should be simple in Controller.
+ */
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WalkMe.API.Data;
 using WalkMe.API.Models.DTO;
