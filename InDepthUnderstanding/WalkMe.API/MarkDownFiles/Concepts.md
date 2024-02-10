@@ -99,21 +99,24 @@ The above issue is easily solved. This means implementation of service is easily
 - We use this to separate the data access layer from the application.
 - Provides interface without exposing implementation
 - It contains all the CURD operations and we give the method names from the controller
-- This repository layer is in middle between Controller and Database
+- This repository layer is in the middle between the Controller and the Database
 
 **Diagram:**
+![image](https://github.com/nuthanm/deep_understanding_on_concepts/assets/29816449/232134ec-54db-4220-9a05-94377e925f8d)
 
-
-**Benifits:**
+**Benefits:**
 1. Decoupling
 1. Consistency
 1. Performance
 1. Switching multiple data sources
+
+---
+
 ## Clear on the following concepts
-- Http Request Pipeline
-- Importance of Middlewares and it's usage in terms of override the existing implementation
+- HTTP Request Pipeline
+- Importance of Middlewares and its usage in terms of overriding the existing implementation
 - DTO's ( Data Transfer Objects) vs Domain Models
 - Difference between AddSingleTon, AddScoped, AddTransient, AddTryScoped, AddTryTransient
-- Differnece between IActionResult vs ActionResult
+- Difference between IActionResult vs ActionResult
 - How to handle exceptions - At controllers/Services/Repository
-- Order of Attributes: [Http] and then [Route("")] is default one 
+- Order of Attributes: [Http] and then [Route("")] is the default one 
