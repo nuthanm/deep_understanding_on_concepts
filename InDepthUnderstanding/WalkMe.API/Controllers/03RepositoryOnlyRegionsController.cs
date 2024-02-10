@@ -13,14 +13,8 @@ namespace WalkMe.API.Controllers
     //https:localhost:<portnumber>/api/regions
     [Route("api/[controller]")]
     [ApiController]
-    public class RepositoryOnlyRegionsController : ControllerBase
+    public class RepositoryOnlyRegionsController(IRegionRepository regionRepository) : ControllerBase
     {
-        private readonly IRegionRepository regionRepository;
-
-        public RepositoryOnlyRegionsController(IRegionRepository regionRepository)
-        {
-            this.regionRepository = regionRepository;
-        }
 
         // GET all Regions
         // GET: https:localhost:<portnumber>/api/regions

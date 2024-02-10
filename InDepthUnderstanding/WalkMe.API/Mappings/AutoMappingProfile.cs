@@ -6,9 +6,11 @@ public class AutoMappingProfile : Profile
 {
     public AutoMappingProfile()
     {
-            // Source and then Destination
-            // RegionDto to Region
-            // Region to RegionDto
-            CreateMap<RegionDto, Region>().ReverseMap();
+        // Source and then Destination
+        // RegionDto to Region
+        // Region to RegionDto
+        CreateMap<RegionDto, Region>().ReverseMap();
+        CreateMap<UpdateRegionRequestDto, Region>();
+        CreateMap<AddRegionRequestDto, Region>();
     }
 }

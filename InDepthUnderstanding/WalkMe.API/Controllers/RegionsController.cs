@@ -4,6 +4,7 @@
  * 2. Now we move this DBContext from controller to Repository
  * 3. Code should be simple in Controller.
  */
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using WalkMe.API.Models.DTO;
 using WalkMe.API.Repositories;
@@ -13,14 +14,9 @@ namespace WalkMe.API.Controllers
     //https:localhost:<portnumber>/api/regions
     [Route("api/[controller]")]
     [ApiController]
-    public class RegionsController : ControllerBase
+    public class RegionsController(IRegionRepository regionRepository,
+        IMapper mapper) : ControllerBase
     {
-        private readonly IRegionRepository regionRepository;
-
-        public RegionsController(IRegionRepository regionRepository)
-        {
-            this.regionRepository = regionRepository;
-        }
 
         // GET all Regions
         // GET: https:localhost:<portnumber>/api/regions
@@ -31,19 +27,11 @@ namespace WalkMe.API.Controllers
             var regions = await regionRepository.GetAllAsync();
 
             // Map domain data to Dto
-            var regionDto = new List<RegionDto>();
-            foreach (var regionDomain in regions)
-            {
-                regionDto.Add(new RegionDto()
-                {
-                    Id = regionDomain.Id,
-                    Name = regionDomain.Name,
-                    Code = regionDomain.Code,
-                    RegionImageUrl = regionDomain?.RegionImageUrl,
-                });
-            }
+            // Source: regions
+            // Destination: List<RegionDto>
+            var regionDtos = mapper.Map<List<RegionDto>>(regions);
 
-            return Ok(regionDto);
+            return Ok(regionDtos);
         }
 
         // GET Region details for a specific id
@@ -52,7 +40,6 @@ namespace WalkMe.API.Controllers
         [Route("{id:Guid}")]
         public async Task<IActionResult> GetByIdAsync([FromRoute] Guid id)
         {
-            // Option 1: 
             var regionDomain = await regionRepository.GetByIdAsync(id);
 
             if (regionDomain is null)
@@ -61,15 +48,7 @@ namespace WalkMe.API.Controllers
             }
 
             // Map Domain Data to DTO
-            var regionDto = new RegionDto
-            {
-                Id = regionDomain.Id,
-                Name = regionDomain.Name,
-                Code = regionDomain.Code,
-                RegionImageUrl = regionDomain.RegionImageUrl
-            };
-
-            return Ok(regionDto);
+            return Ok(mapper.Map<RegionDto>(regionDomain));
         }
 
 
@@ -79,26 +58,13 @@ namespace WalkMe.API.Controllers
         public async Task<IActionResult> CreateRegionAsync([FromBody] AddRegionRequestDto addRegionRequestDto)
         {
             // Map or Convert Dto to Domain
-            var regionDomainModel = new Region
-            {
-                Code = addRegionRequestDto.Code,
-                Name = addRegionRequestDto.Name,
-                RegionImageUrl = addRegionRequestDto.RegionImageUrl
-            };
-
+            var regionDomainModel = mapper.Map<Region>(addRegionRequestDto);
 
             // Use Domain Model to create Region
             regionDomainModel = await regionRepository.CreateRegionAsync(regionDomainModel);
 
             // Map Domain model to Dto
-            var regionDto = new RegionDto
-            {
-                Id = regionDomainModel.Id,
-                Name = regionDomainModel.Name,
-                Code = regionDomainModel.Code,
-                RegionImageUrl = regionDomainModel.RegionImageUrl
-            };
-            var data = RouteData.Values;
+            var regionDto = mapper.Map<RegionDto>(regionDomainModel);
 
             return CreatedAtAction(nameof(GetByIdAsync), new { id = regionDto!.Id }, regionDto);
         }
@@ -109,15 +75,8 @@ namespace WalkMe.API.Controllers
         [Route("{id:guid}")]
         public async Task<IActionResult> UpdateRegionAsync([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {
-
             // Map or Convert Dto to Domain
-            var regionDomainModel = new Region
-            {
-                Id = id,
-                Code = updateRegionRequestDto.Code,
-                Name = updateRegionRequestDto.Name,
-                RegionImageUrl = updateRegionRequestDto.RegionImageUrl
-            };
+            var regionDomainModel = mapper.Map<Region>(updateRegionRequestDto);
 
             // Check first if Region exists
             regionDomainModel = await regionRepository.UpdateRegionAsync(id, regionDomainModel);
@@ -128,15 +87,7 @@ namespace WalkMe.API.Controllers
             }
 
             // Map Domain model to Dto
-            var regionDto = new RegionDto
-            {
-                Id = regionDomainModel.Id,
-                Name = regionDomainModel.Name,
-                Code = regionDomainModel.Code,
-                RegionImageUrl = regionDomainModel.RegionImageUrl
-            };
-
-            var data = RouteData.Values;
+            var regionDto = mapper.Map<RegionDto>(regionDomainModel);
 
             return CreatedAtAction(nameof(GetByIdAsync), new { id = regionDto.Id }, regionDto);
         }
@@ -149,21 +100,14 @@ namespace WalkMe.API.Controllers
         {
             // Check first if Region exists
             var regionDomainModel = await regionRepository.DeleteRegionAsync(id);
+
             if (regionDomainModel is null)
             {
                 return NotFound();
             }
 
             // Map Domain model to Dto
-            var regionDto = new RegionDto
-            {
-                Id = regionDomainModel.Id,
-                Name = regionDomainModel.Name,
-                Code = regionDomainModel.Code,
-                RegionImageUrl = regionDomainModel.RegionImageUrl
-            };
-
-            return Ok(regionDto);
+            return Ok(mapper.Map<RegionDto>(regionDomainModel));
         }
     }
 }
