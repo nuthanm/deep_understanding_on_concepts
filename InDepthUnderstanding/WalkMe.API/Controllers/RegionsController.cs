@@ -100,8 +100,8 @@ namespace WalkMe.API.Controllers
         // Put: Update a existing region
         // Put: https:localhost:<portnumber>/api/regions/{id}
         [HttpPut]
-        [Route("{id:Guid}")]
-        public async Task<IActionResult> UpdateRegionAsync([FromRoute] Guid id, [FromBody] AddRegionRequestDto addRegionRequestDto)
+        [Route("{id:guid}")]
+        public async Task<IActionResult> UpdateRegionAsync([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto addRegionRequestDto)
         {
             // Check first if Region exists
             var isExists = await dbContext.Regions.AnyAsync(x => x.Id == id);
@@ -139,7 +139,7 @@ namespace WalkMe.API.Controllers
         // Put: Update a existing region
         // Put: https:localhost:<portnumber>/api/regions/{id}
         [HttpDelete]
-        [Route("{id:Guid}")]
+        [Route("{id:guid}")]
         public async Task<IActionResult> DeleteRegionAsync([FromRoute] Guid id)
         {
             // Check first if Region exists

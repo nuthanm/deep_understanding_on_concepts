@@ -6,6 +6,8 @@
 2. Microsoft.EntityFrameworkCore.Tools
    - It contains Microsoft.EntityFrameworkCore.Design
 
+---
+
 ### Database Context
 **DBContextOptions** we use for accessing configuration values from appsettings.json through Constructor Injection.
 We pass this object to :base(dbContextOptions) like below
@@ -20,10 +22,13 @@ We pass this object to :base(dbContextOptions) like below
         }
 ```
 
+---
+
 ### Terminologies
  - For any Database object in Csharp : Class == Domain/Entities
  - 
 
+---
 
 ### DI - Dependency Injection
 
@@ -69,6 +74,8 @@ The above issue is easily solved. This means implementation of service is easily
     builder.Services.AddScoped<IEmployeeService, EmpNewService>();
 ```
 
+---
+
 ### DTO's ( Data Transfer Objects) vs Domain Models
 - ```DTO``` stands "Data Transfer Objects"
 - In the name itself these objects are used for transfer between layers or over networks.
@@ -78,6 +85,7 @@ The above issue is easily solved. This means implementation of service is easily
   - No direct exposure of Domain models to client
   - With DTO's we can manipulate and send it back to client.
   - 
+
 **Pros**
 - Separation of Concerns: Domain models are tightly coupled with Database schema objects where as DTO's are not like that we use it for business purpose.
                            Advantage here is we can customize and manipulate on DTO's and no need of expoing all the columns to the client.
@@ -85,6 +93,22 @@ The above issue is easily solved. This means implementation of service is easily
 - Security: Avoiding exposing all the data over the network to the client.
 - Versioning
 
+---
+
+## Repository Pattern
+- We use this to separate the data access layer from the application.
+- Provides interface without exposing implementation
+- It contains all the CURD operations and we give the method names from the controller
+- This repository layer is in middle between Controller and Database
+
+**Diagram:**
+
+
+**Benifits:**
+1. Decoupling
+1. Consistency
+1. Performance
+1. Switching multiple data sources
 ## Clear on the following concepts
 - Http Request Pipeline
 - Importance of Middlewares and it's usage in terms of override the existing implementation
