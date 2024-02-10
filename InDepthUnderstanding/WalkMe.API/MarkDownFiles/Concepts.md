@@ -112,6 +112,80 @@ The above issue is easily solved. This means implementation of service is easily
 
 ---
 
+## Automapper
+- Useful to map object to object
+- It means DTO to Domain or vice versa
+- Simplify the process of mapping
+- Avoid repeatable code and make it clean and simple
+- PreRequisites:
+  - Install ```Nuget Package```: Automapper
+  - Create mapping profile class
+    - Extend this class with ```Profile```
+    - Create a constructor and create mapping
+    - If properties are not match with entities like DTO and Domains then automapper won't work directly.
+      - We set explicity map for this scenario
+    - Inject this in startup.cs ```builder.Services.AddAutoMapper(typeof(AutoMappingProfile));```
+
+**Example:** 
+Class A contains FullName
+Class B contains Name
+
+> CreateMap<Source, Destination>
+  .ForMember(x=>x.Name, opt => opt.MapFrom(x=>x.FullName)
+  .ReverseMap()
+
+**Example:** With out  ```Automapper```
+
+**Domain models to DTO:**
+```
+            var regionDomain = await regionRepository.GetByIdAsync(id);
+
+            if (regionDomain is null)
+            {
+                return NotFound();
+            }
+            
+            var regionDto = new RegionDto
+            {
+                Id = regionDomain.Id,
+                Name = regionDomain.Name,
+                Code = regionDomain.Code,
+                RegionImageUrl = regionDomain.RegionImageUrl
+            };
+
+```
+
+**DTO to Domain models:**
+
+```
+            
+            var regionDomainModel = new Region
+            {
+                Code = addRegionRequestDto.Code,
+                Name = addRegionRequestDto.Name,
+                RegionImageUrl = addRegionRequestDto.RegionImageUrl
+            };
+
+```
+
+**Example:** With ```Automapper```
+
+**Domain models to DTO:**
+```
+             
+
+```
+
+**DTO to Domain models:**
+
+```
+            
+           
+
+```
+---
+
+
 ## Clear on the following concepts
 - HTTP Request Pipeline
 - Importance of Middlewares and its usage in terms of overriding the existing implementation

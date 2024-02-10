@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using WalkMe.API.Data;
+using WalkMe.API.Mappings;
 using WalkMe.API.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,8 @@ builder.Services.AddDbContext<WalkMeDbContext>(options =>
         ));
 
 builder.Services.AddScoped<IRegionRepository, RegionRepository>();
+
+builder.Services.AddAutoMapper(typeof(AutoMappingProfile));
 
 var app = builder.Build();
 

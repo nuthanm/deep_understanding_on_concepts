@@ -29,7 +29,7 @@ Return type for Pattern 2: ```List<Region>```
 
 **Note:** No change in the query either way you can use it.
 
-----------------------------------
+---
 ### Query 2: To get single data we have multiple options
 #### Option 1: If you have a primary key column then use ```Find or FindAsync``` methods
 
@@ -119,4 +119,26 @@ SELECT TOP(2) [r].[Id], [r].[Code], [r].[Name], [r].[RegionImageUrl]
 
 **Note:** No change in SQL Queries when you use any one of these options: Option 1, Option 2, and Option 3 
 
-----------------------------------
+---
+
+### Query 3: Insert the data
+
+**Linq Query:**
+
+```
+await dbContext.Regions.AddAsync(region);
+await dbContext.SaveChangesAsync();
+
+```
+
+**SQL Query:**
+
+```
+      SET IMPLICIT_TRANSACTIONS OFF;
+      SET NOCOUNT ON;
+      INSERT INTO [Regions] ([Id], [Code], [Name], [RegionImageUrl])
+      VALUES (@p0, @p1, @p2, @p3);
+
+```
+
+---1

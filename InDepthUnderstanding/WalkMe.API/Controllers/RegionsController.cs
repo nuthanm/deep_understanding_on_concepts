@@ -49,7 +49,7 @@ namespace WalkMe.API.Controllers
         // GET Region details for a specific id
         // GET: https:localhost:<portnumber>/api/regions/{id}
         [HttpGet]
-        [Route("{id:guid}")]
+        [Route("{id:Guid}")]
         public async Task<IActionResult> GetByIdAsync([FromRoute] Guid id)
         {
             // Option 1: 
@@ -60,6 +60,7 @@ namespace WalkMe.API.Controllers
                 return NotFound();
             }
 
+            // Map Domain Data to DTO
             var regionDto = new RegionDto
             {
                 Id = regionDomain.Id,
@@ -97,8 +98,9 @@ namespace WalkMe.API.Controllers
                 Code = regionDomainModel.Code,
                 RegionImageUrl = regionDomainModel.RegionImageUrl
             };
+            var data = RouteData.Values;
 
-            return CreatedAtAction(nameof(GetByIdAsync), new { id = regionDto.Id }, regionDto);
+            return CreatedAtAction(nameof(GetByIdAsync), new { id = regionDto!.Id }, regionDto);
         }
 
         // Put: Update a existing region
@@ -133,6 +135,8 @@ namespace WalkMe.API.Controllers
                 Code = regionDomainModel.Code,
                 RegionImageUrl = regionDomainModel.RegionImageUrl
             };
+
+            var data = RouteData.Values;
 
             return CreatedAtAction(nameof(GetByIdAsync), new { id = regionDto.Id }, regionDto);
         }
