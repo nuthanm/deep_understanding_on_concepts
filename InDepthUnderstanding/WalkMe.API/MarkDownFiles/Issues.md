@@ -126,3 +126,15 @@ Created a interface and used it in Concret class but not register in startup.cs 
 ```
 builder.Services.AddScoped<IRegionRepository, RegionRepository>();
 ```
+## Issue 7
+> Exception has Occured: CLR/System.InvalidOperationException
+An unhandled exception of type 'System.InvalidOperationException' occured in Microsoft.AspNetCore.Hosting.dll: 'A public method named 'ConfigureDevelopment' or 'Configure' could not be found in the '<App>.Startup' type.'
+
+**Reason:**
+If we remove configureservices and configure methods in startup.cs file then we get the above issue.
+It means Configure method is mandatory to keep it in ```Startup.cs``` file.
+
+**Solution:**
+After added Configure method then the above issue is not coming
+
+---

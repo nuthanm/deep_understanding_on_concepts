@@ -8,3 +8,8 @@
 4. What is the reason behind merge .NET framework & .NET Core and now we call it as .NET?
 5. Why i choose .NET over Java?
 6. Why i choose Azure over AWS?
+
+
+### Core concepts we should understand in Asp.NET Core
+1. **Middleware** - is a component we used for handle request and responses. All these middle wares are chained to gether and choose whether to pass the request to next component or not.
+1. 
