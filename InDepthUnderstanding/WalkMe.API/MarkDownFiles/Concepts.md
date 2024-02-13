@@ -194,3 +194,5 @@ Class B contains Name
 - Difference between IActionResult vs ActionResult
 - How to handle exceptions - At controllers/Services/Repository
 - Order of Attributes: [Http] and then [Route("")] is the default one 
+- Decorator Pattern
+- AOP - Aspect Oriented Programming.
